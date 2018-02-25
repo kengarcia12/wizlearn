@@ -9,7 +9,7 @@ $(document).ready(function(){
 	$('.start').click(function(){
 		setTimeout(function(){
 			if(window.location.href.indexOf('#section2') > -1){
-				 $('#myModal').modal('show');
+				$('#myModal').modal('show');
 			}
 		},200);
 	});
@@ -92,6 +92,7 @@ $(document).ready(function(){
 	$('.qField #qValue').on('keypress keyup',function (event) {
 		inputVal = $('.qField #qValue').val();
 
+		//Check if Input value is not empty
 		if( inputVal != ''){
 			$('.submit').prop('disabled', false);
 		}else{
@@ -108,6 +109,7 @@ $(document).ready(function(){
 	$('.lighter').click(function(){
 		console.log( inputVal + ":" + getDistance );
 		
+		//Check if Input value is equal to Distance and 1st weight item is less than 2nd weigth item
 		if( inputVal == getDistance && weight1 < weight2){
 			console.log( 'correct' );
 			lightAnswer = true;
@@ -122,6 +124,7 @@ $(document).ready(function(){
 	$('.heavier').click(function(){
 		
 		console.log( inputVal + ":" + getDistance );
+		//Check if Input value is equal to Distance and 1st weight item is greater than 2nd weigth item
 		if( inputVal == getDistance  && weight1 > weight2){
 			console.log( 'correct' );
 			heavyAnswer = true;
@@ -147,7 +150,6 @@ $(document).ready(function(){
 				jsonLoad++;
 				$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 				$('.nextQuestion').addClass('active');
-
 			}
 		}else if( heavyAnswer == false){
 			incorrect += 10;
@@ -160,13 +162,13 @@ $(document).ready(function(){
 			}
 		}else if( lightAnswer == true){
 			alert('correct');
-			correct += 10;
+			correct += 20;
 			jsonLoad++;
 			$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 			$('.nextQuestion').addClass('active');
 		}else if( heavyAnswer == true){
 			alert('correct');
-			correct += 10;
+			correct += 20;
 			jsonLoad++;
 			$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 			$('.nextQuestion').addClass('active');
@@ -178,9 +180,6 @@ $(document).ready(function(){
 		console.log("incorrect: " + incorrect);
 		console.log("correct: " + correct);
 		console.log(jsonLoad);
-		if(jsonLoad == 3){
-			alert('End page');
-		}
 
 
 
@@ -188,6 +187,9 @@ $(document).ready(function(){
 
 	$('.nextQuestion').click(function(){
 		populateJson();
+		if(jsonLoad == 3){
+			alert('end page');
+		}
 	});
 	
 	
