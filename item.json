@@ -1,0 +1,56 @@
+{
+  "items": {
+    "item": [
+      {
+        "name": "box of crayons",
+        "label": "crayons",
+        "weight": "310"
+      },
+      {
+        "name": "orange",
+        "label": "orange",
+        "weight": "210"
+      },
+      {
+        "name": "apple",
+        "label": "apple",
+        "weight": "180"
+      },
+      {
+        "name": "present",
+        "label": "present",
+        "weight": "160"
+      },
+      {
+        "name": "helmet",
+        "label": "helmet",
+        "weight": "460"
+      },
+      {
+        "name": "book",
+        "label": "book",
+        "weight": "370"
+      },
+      {
+        "name": "watermelon",
+        "label": "watermelon",
+        "weight": "430"
+      },
+      {
+        "name": "mango",
+        "label": "mango",
+        "weight": "220"
+      },
+      {
+        "name": "paper bag",
+        "label": "bag",
+        "weight": "60"
+      },
+      {
+        "name": "soccer ball",
+        "label": "soccer",
+        "weight": "350"
+      }
+    ]
+  }
+}
