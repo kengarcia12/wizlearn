@@ -154,4 +154,6 @@ footer .bottom {height: 25px;z-index: 3;width: 100%;position: absolute;bottom: 0
 footer .bottom p {color: #fff;font-weight: bold; font-size: 12px; display: table-cell; vertical-align: middle;}
 footer ul { text-decoration: none; list-style: none; text-align: center; padding: 0; margin: 0;  }
 footer ul li { display: inline-block; font-size: 20px; font-weight: bold; cursor: pointer; }
-
+footer .qIndicator { border: solid 1px red; }
+footer .nextQuestion { pointer-events: none; }
+footer .nextQuestion.active { pointer-events: auto; color: red; }
