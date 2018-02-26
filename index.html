@@ -15,7 +15,9 @@
 
     </head>
     <body>
+        <audio id='intro' controls autoplay loop src="assets/audio/intro2.mp3" type="audio/ogg">
 
+        </audio>
     	<header>
     		<div class="top">
                 <div class="half"></div>
@@ -48,6 +50,8 @@
                             </div> -->
                             <div class="modal-body">
                                 <img src="assets/images/modal.png" class="img-responsive">
+                                <audio id="learningObj" src="assets/audio/learnObj.mp3" type="audio/ogg">
+                                </audio>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -56,7 +60,27 @@
 
                     </div>
                 </div>
-                
+                <div id="dynamicModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <!-- <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div> -->
+                            <div class="modal-body">
+                                <img src="assets/images/modal.png" class="img-responsive">
+                                <audio id="learningObj" src="assets/audio/learnObj.mp3" type="audio/ogg">
+                                </audio>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="qContainer">
                     <div class="qWrap">
                         <div class="col-lg-6">
@@ -88,8 +112,8 @@
                         <span class="i_label1"></span>
                         <span> is </span>
                         <input type="text" name="" id="qValue">
-                        <button class="btn btn-default lighter">lighter</button>
-                        <button class="btn btn-default heavier">heavier</button>
+                        <input type="submit" class="btn btn-default lighter" value="Lighter" disabled>
+                        <input type="submit" class="btn btn-default heavier" value="Heavier" disabled>
                         <span>than the </span>
                         <span class="i_label2"></span>
                         <input type="submit" class="btn btn-primary submit" value="Submit" disabled>
@@ -110,8 +134,8 @@
                 <div class="top pull-right">
                     <ul>
                         <li class="home"><i class="fas fa-home"></i></li>
-                        <li><i class="fas fa-info" data-toggle="modal" data-target="#myModal"></i></li>
-                        <li><i class="fas fa-volume-up"></i></li>
+                        <li class="learn"><i class="fas fa-info" data-toggle="modal" data-target="#myModal"></i></li>
+                        <li class="music"><i class="fas fa-volume-up"></i></li>
                         <li><i class="fas fa-hand-point-left"></i></i></li>
                         <li class="qIndicator"><span></span></li>
                         <li class="nextQuestion"><i class="fas fa-hand-point-right"></i></li>
@@ -131,5 +155,6 @@
     	<script src="assets/js/jquery.js"></script>
     	<script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/main.js"></script>
+        <script src="assets/js/music.js"></script>
     </body>
 </html>

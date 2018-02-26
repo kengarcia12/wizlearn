@@ -108,6 +108,7 @@ section.two .qImage, section.two .qImage2 { width: 100%; max-width: 100px; }
 section.three { position: absolute; top: 20% ; right: 3%; }
 section.three .scoreLabel { font-family: sans-serif; font-size: 30px; color: #1abceb; font-weight: bold; }
 
+audio { display: none; }
 
 
 

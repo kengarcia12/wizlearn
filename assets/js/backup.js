@@ -83,9 +83,9 @@ $(document).ready(function(){
 		$('.i_label2').text(selectedItem2.label+ '.');
 		$('.qIndicator').text('Q'+jsonLoad+'/5' );
 		$('.nextQuestion').removeClass('active');
-		$('#qValue').prop('disabled', false);
+		$('#qValue, .lighter, .heavier').prop('disabled', false);
 		$('#qValue').val('');
-		$('.submit, .lighter, .heavier').prop('disabled',true);
+		$('.submit').prop('disabled',true);
 	}
 	
 	populateJson();
@@ -101,7 +101,9 @@ $(document).ready(function(){
 
 		//Check if Input value is not empty
 		if( inputVal != ''){
-			$('.submit, .lighter, .heavier').prop('disabled', false);
+			$('.submit').prop('disabled', false);
+		}else{
+			$('.submit').prop('disabled', false);
 		}
 
 		// Accept only numeric value
@@ -112,17 +114,26 @@ $(document).ready(function(){
 
 
 	$('.lighter').click(function(){
-		// Trigger this class to have condition after submit
 		$('.heavier').removeClass('selected');
 		$(this).addClass('selected');
-
 		console.log( inputVal + ":" + getDistance );
 		if($('.qField #qValue').val() == ""){
 			alert('Please enter a value');
 		}
+		
+		//Check if Input value is equal to Distance and 1st weight item is less than 2nd weigth item
+		/*if( inputVal == getDistance && weight1 < weight2){
+			console.log( 'correct' );
+			lightAnswer = true;
+		}else if($('.qField #qValue').val() == ""){
+			alert('Please enter a value');
+		}else{
+			console.log('error');
+			lightAnswer = 'false';
+		}*/
+
 	});
 	$('.heavier').click(function(){
-		// Trigger this class to have condition after submit
 		$('.lighter').removeClass('selected');
 		$(this).addClass('selected');
 
@@ -130,6 +141,16 @@ $(document).ready(function(){
 		if($('.qField #qValue').val() == ""){
 			alert('Please enter a value');
 		}
+		//Check if Input value is equal to Distance and 1st weight item is greater than 2nd weigth item
+		/*if( inputVal == getDistance  && weight1 > weight2){
+			console.log( 'correct' );
+			heavyAnswer = true;
+		}else if($('.qField #qValue').val() == ""){
+			alert('Please enter a value');
+		}else{
+			console.log('wrong');
+			heavyAnswer = false;
+		}*/
 	});
 	$('.submit').click(function(){
 		
@@ -138,54 +159,66 @@ $(document).ready(function(){
 		console.log(correct);
 		console.log(incorrect);
 		if($('.lighter').hasClass('selected')){
-			console.log($('.lighter').val());
+			console.log($('.lighter').text());
 			if( inputVal == getDistance && weight1 < weight2){
 				console.log( 'correct' );
 				lightAnswer = true;
-				alert('correct');
-				correctAudio.play();
-				correct += 20;
-				incorrect = 0;
-				jsonLoad++;
-				disableAddclass();
+			}else if($('.qField #qValue').val() == ""){
+				alert('Please enter a value');
 			}else{
 				console.log('error');
 				lightAnswer = 'false';
-				incorrect += 10;
-				incorrectAudio.play();
-				if( incorrect == 20){
-					setTimeout(function(){ correctAns.play(); },100);
-					popupError();
-					incorrect = 0;
-					jsonLoad++;
-					disableAddclass();
-				}
 			}
 		}else if($('.heavier').hasClass('selected')){
-			console.log($('.heavier').val());
+			console.log($('.heavier').text());
 			if( inputVal == getDistance  && weight1 > weight2){
-				console.log( 'correct' );
-				heavyAnswer = true;
-				alert('correct');
-				correctAudio.play();
-				correct += 20;
+			console.log( 'correct' );
+			heavyAnswer = true;
+		}else if($('.qField #qValue').val() == ""){
+			alert('Please enter a value');
+		}else{
+			console.log('wrong');
+			heavyAnswer = false;
+		}
+		}
+		
+		/*if( lightAnswer == false ){
+			incorrect += 10;
+			incorrectAudio.play();
+			if( incorrect == 20){
+				setTimeout(function(){ correctAns.play(); },100);
+				popupError();
 				incorrect = 0;
 				jsonLoad++;
 				disableAddclass();
-			}else{
-				console.log('wrong');
-				heavyAnswer = false;
-				incorrect += 10;
-				incorrectAudio.play();
-				if( incorrect == 20){
-					setTimeout(function(){ correctAns.play(); },100);
-					popupError();
-					incorrect = 0;
-					jsonLoad++;
-					disableAddclass();
-				}
 			}
-		}
+		}else if( heavyAnswer == false){
+			incorrect += 10;
+			incorrectAudio.play();
+			if( incorrect == 20){
+				setTimeout(function(){ correctAns.play(); },100);
+				popupError();
+				incorrect = 0;
+				jsonLoad++;
+				disableAddclass();
+			}
+		}else if( lightAnswer == true){
+			alert('correct');
+			correctAudio.play();
+			correct += 20;
+			incorrect = 0;
+			jsonLoad++;
+			disableAddclass();
+		}else if( heavyAnswer == true){
+			alert('correct');
+			correctAudio.play();
+			correct += 20;
+			incorrect = 0;
+			jsonLoad++;
+			disableAddclass();
+		}else if($('.qField #qValue').val() == ''){
+			alert('Please enter a value');
+		}*/
 		$('.score').text(correct);
 
 		console.log("incorrect: " + incorrect);
@@ -231,11 +264,6 @@ $(document).ready(function(){
 		$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 		$('.nextQuestion').addClass('active');
 	}
-
-
-setTimeout(function(){
-	$('#dynamicModal').modal('show');
-},3000)
 	
 	
 
