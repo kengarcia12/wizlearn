@@ -21,6 +21,7 @@ $(document).ready(function(){
 		correctAns = new Audio('assets/audio/correctAnswer.mp3'),
 		outstanding = new Audio('assets/audio/outsEffort.mp3'),
 		doBetter = new Audio ('assets/audio/doBetter.mp3');
+
 	var json = (function () {
 	    var json = null;
 	    $.ajax({
@@ -35,30 +36,29 @@ $(document).ready(function(){
 	    return json;
 	})();
 
-
+	//Populate Json Item on load
 	populateJson();
-	
-	
+
+	//User input and validations
 	$('.qField #qValue').on('keypress keyup',function (event) {
 		inputVal = $('.qField #qValue').val();
-
 		//Check if Input value is not empty
 		if( inputVal != ''){
 			$('.submit, .lighter, .heavier').prop('disabled', false);
 		}
-
 		// Accept only numeric value
 	  	$(this).val($(this).val().replace(/[^\d].+/, ""));
 	    if ((event.which < 48 || event.which > 57)) { event.preventDefault(); }
 	});
 
-
+	//Button start
 	$('.start').click(function(){
 		$('section.one').hide();
 		$('section.two').fadeIn();
 		$('.home, .learn').css('pointer-events','auto');
 	});
 
+	//Button Lighter
 	$('.lighter').click(function(){
 		// Trigger this class to have condition after submit
 		$('.heavier').removeClass('selected');
@@ -69,21 +69,26 @@ $(document).ready(function(){
 			alert('Please enter a value');
 		}
 	});
+
+	//Button Heavier
 	$('.heavier').click(function(){
 		// Trigger this class to have condition after submit
 		$('.lighter').removeClass('selected');
 		$(this).addClass('selected');
-
 		console.log( inputVal + ":" + getDistance );
 		if($('.qField #qValue').val() == ""){
 			alert('Please enter a value');
 		}
 	});
+
+	//Submit button
 	$('.submit').click(function(){
 		console.log("light : " + lightAnswer);
 		console.log("heavey : " + heavyAnswer);
 		console.log(correct);
 		console.log(incorrect);
+
+		//Added condition for lighter and heavier button is clicked
 		if($('.lighter').hasClass('selected')){
 			console.log($('.lighter').val());
 			if( inputVal == getDistance && weight1 < weight2){
@@ -136,17 +141,18 @@ $(document).ready(function(){
 			}
 		}
 		$('.score').text(correct);
-
 		console.log("incorrect: " + incorrect);
 		console.log("correct: " + correct);
 		console.log(jsonLoad);
 	});
+
+	//Next question button
 	$('.nextQuestion').click(function(){
 		var resultImg = ['<img src="assets/images/qImages/outstanding.png">',
 		 				'<img src="assets/images/qImages/doBetter.png">'],
 		 	info = '<h1>Your Score : '+ correct +'/100</h1>';
 
-
+		//Reload json item after clicking next
 		populateJson();
 		if(jsonLoad == 6){
 			if(correct == 100){
@@ -163,12 +169,6 @@ $(document).ready(function(){
 		}
 	});
 
-	$('.home').click(function(){
-		$("#home").on("shown.bs.modal", function () {
- 			$(this).find('.modal-body h1').text('End Activity?');
-		}).modal('show');
-	});
-	
 	$('.start').click(function(){
 		setTimeout(function(){
 			if(window.location.href.indexOf('#section2') > -1){
@@ -176,6 +176,11 @@ $(document).ready(function(){
 				document.getElementById("learningObj").play();
 			}
 		},200);
+	});
+	$('.home').click(function(){
+		$("#home").on("shown.bs.modal", function () {
+ 			$(this).find('.modal-body h1').text('End Activity?');
+		}).modal('show');
 	});
 	
 
@@ -192,12 +197,12 @@ $(document).ready(function(){
 		console.log(selectedItem.label + " : " + selectedItem.weight);
 		console.log(selectedItem2.label + " : " + selectedItem2.weight);
 		console.log(jsonLoad);
-		
 		if( selectedItem.label == selectedItem2.label){
 			populateJson();
 			window.location.reload(true);
 		}
-	
+		
+		
 
 		$('.qImage').attr('src',imgPreUrl+selectedItem.label+'.png');
 		$('.qImage2').attr('src',imgPreUrl+selectedItem2.label+'.png');
