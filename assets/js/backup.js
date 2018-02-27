@@ -1,26 +1,4 @@
 $(document).ready(function(){
-	$('.start').click(function(){
-		$('section.one').hide();
-		$('section.two').fadeIn();
-	});
-	if(window.location.href.indexOf('#section2') > -1){
-		console.log('test');
-	}
-	$('.start').click(function(){
-		setTimeout(function(){
-			if(window.location.href.indexOf('#section2') > -1){
-				$('#myModal').modal('show');
-			}
-		},200);
-	});
-	$('.home').click(function(){
-
-	}); 
-
-
-
-
-
 	var theLabels = [], 
 		theWeight = [],
 		objItem,
@@ -28,7 +6,7 @@ $(document).ready(function(){
 		selectedItem2,
 		toAppend,
 		toAppen2,
-		imgPreUrl = "assets/images/qImages/",
+		imgPreUrl = 'assets/images/qImages/',
 		inputVal,
 		getDistance,
 		jsonLoad = 1,
@@ -40,12 +18,9 @@ $(document).ready(function(){
 		incorrect = 0,
 		correctAudio = new Audio('assets/audio/correct.mp3'),
 		incorrectAudio = new Audio('assets/audio/incorrect.mp3'),
-		correctAns = new Audio('assets/audio/correctAnswer.mp3');
-		
-
-
-	
-
+		correctAns = new Audio('assets/audio/correctAnswer.mp3'),
+		outstanding = new Audio('assets/audio/outsEffort.mp3'),
+		doBetter = new Audio ('assets/audio/doBetter.mp3');
 	var json = (function () {
 	    var json = null;
 	    $.ajax({
@@ -59,21 +34,25 @@ $(document).ready(function(){
 	    });
 	    return json;
 	})();
+
+
 	
 
 	function populateJson(){
 		objItem = json.items.item;
 		selectedItem = random(objItem);
 		selectedItem2 = random(objItem);
-		toAppend = '<div class="itemName"> ' + selectedItem.name + '<div class="itemLabel">'+selectedItem.label+'<div  class="itemWeight">'+selectedItem.weight+'</div></div></div>';
-		toAppend2 = '<div class="itemName"> ' + selectedItem2.name + '<div class="itemLabel">'+selectedItem2.label+'<div class="itemWeight">'+selectedItem2.weight+'</div></div></div>';
+		toAppend = '<div class="itemName"> ' + selectedItem.name + '<div class="itemLabel">'+selectedItem.label+'</div><div  class="itemWeight">'+selectedItem.weight+'</div></div>';
+		toAppend2 = '<div class="itemName"> ' + selectedItem2.name + '<div class="itemLabel">'+selectedItem2.label+'</div><div class="itemWeight">'+selectedItem2.weight+'</div></div>';
 		weight1 = Math.abs(selectedItem.weight);
 		weight2 = Math.abs(selectedItem2.weight);
-		getDistance = getItemDistance(selectedItem.weight, selectedItem2.weight);
+		getDistance = Math.abs(getItemDistance(selectedItem.weight, selectedItem2.weight));
 		console.log(selectedItem.label + " : " + selectedItem.weight);
 		console.log(selectedItem2.label + " : " + selectedItem2.weight);
 		console.log(jsonLoad);
+	
 
+		
 
 		$('.qImage').attr('src',imgPreUrl+selectedItem.label+'.png');
 		$('.qImage2').attr('src',imgPreUrl+selectedItem2.label+'.png');
@@ -81,11 +60,19 @@ $(document).ready(function(){
 		$('.selectedItem2').append(toAppend2);
 		$('.i_label1').text(selectedItem.label);
 		$('.i_label2').text(selectedItem2.label+ '.');
-		$('.qIndicator').text('Q'+jsonLoad+'/5' );
+		$('.qIndicator').text('Q'+jsonLoad +'/5' );
 		$('.nextQuestion').removeClass('active');
-		$('#qValue, .lighter, .heavier').prop('disabled', false);
+		$('#qValue').prop('disabled', false);
 		$('#qValue').val('');
-		$('.submit').prop('disabled',true);
+		$('.submit, .lighter, .heavier').prop('disabled',true);
+		$('.imgChecker').hide();
+
+		$('.qDiv').each(function(){
+			var _thisLabel = $(this).find('.itemLabel').text();
+			if(_thisLabel){
+				$(this).find('.scaleArm').addClass(_thisLabel);
+			}
+		});
 	}
 	
 	populateJson();
@@ -101,9 +88,7 @@ $(document).ready(function(){
 
 		//Check if Input value is not empty
 		if( inputVal != ''){
-			$('.submit').prop('disabled', false);
-		}else{
-			$('.submit').prop('disabled', false);
+			$('.submit, .lighter, .heavier').prop('disabled', false);
 		}
 
 		// Accept only numeric value
@@ -113,27 +98,24 @@ $(document).ready(function(){
 
 
 
+
+	$('.start').click(function(){
+		$('section.one').hide();
+		$('section.two').fadeIn();
+	});
+
 	$('.lighter').click(function(){
+		// Trigger this class to have condition after submit
 		$('.heavier').removeClass('selected');
 		$(this).addClass('selected');
+
 		console.log( inputVal + ":" + getDistance );
 		if($('.qField #qValue').val() == ""){
 			alert('Please enter a value');
 		}
-		
-		//Check if Input value is equal to Distance and 1st weight item is less than 2nd weigth item
-		/*if( inputVal == getDistance && weight1 < weight2){
-			console.log( 'correct' );
-			lightAnswer = true;
-		}else if($('.qField #qValue').val() == ""){
-			alert('Please enter a value');
-		}else{
-			console.log('error');
-			lightAnswer = 'false';
-		}*/
-
 	});
 	$('.heavier').click(function(){
+		// Trigger this class to have condition after submit
 		$('.lighter').removeClass('selected');
 		$(this).addClass('selected');
 
@@ -141,16 +123,6 @@ $(document).ready(function(){
 		if($('.qField #qValue').val() == ""){
 			alert('Please enter a value');
 		}
-		//Check if Input value is equal to Distance and 1st weight item is greater than 2nd weigth item
-		/*if( inputVal == getDistance  && weight1 > weight2){
-			console.log( 'correct' );
-			heavyAnswer = true;
-		}else if($('.qField #qValue').val() == ""){
-			alert('Please enter a value');
-		}else{
-			console.log('wrong');
-			heavyAnswer = false;
-		}*/
 	});
 	$('.submit').click(function(){
 		
@@ -159,89 +131,92 @@ $(document).ready(function(){
 		console.log(correct);
 		console.log(incorrect);
 		if($('.lighter').hasClass('selected')){
-			console.log($('.lighter').text());
+			console.log($('.lighter').val());
 			if( inputVal == getDistance && weight1 < weight2){
-				console.log( 'correct' );
+				$('.imgChecker').attr('src','assets/images/qImages/correct.png');
+				$('.imgChecker').show();
 				lightAnswer = true;
-			}else if($('.qField #qValue').val() == ""){
-				alert('Please enter a value');
+				correctAudio.play();
+				correct += 20;
+				incorrect = 0;
+				jsonLoad++;
+				disableAddclass();
 			}else{
-				console.log('error');
+				$('.imgChecker').attr('src','assets/images/qImages/incorrect.png');
+				$('.imgChecker').show();
 				lightAnswer = 'false';
+				incorrect += 10;
+				incorrectAudio.play();
+				if( incorrect == 20){
+					setTimeout(function(){ correctAns.play(); },1000);
+					popupCorrect();
+					incorrect = 0;
+					jsonLoad++;
+					disableAddclass();
+				}
 			}
 		}else if($('.heavier').hasClass('selected')){
-			console.log($('.heavier').text());
+			console.log($('.heavier').val());
 			if( inputVal == getDistance  && weight1 > weight2){
-			console.log( 'correct' );
-			heavyAnswer = true;
-		}else if($('.qField #qValue').val() == ""){
-			alert('Please enter a value');
-		}else{
-			console.log('wrong');
-			heavyAnswer = false;
-		}
-		}
-		
-		/*if( lightAnswer == false ){
-			incorrect += 10;
-			incorrectAudio.play();
-			if( incorrect == 20){
-				setTimeout(function(){ correctAns.play(); },100);
-				popupError();
+				$('.imgChecker').attr('src','assets/images/qImages/correct.png');
+				$('.imgChecker').show();
+				heavyAnswer = true;
+				correctAudio.play();
+				correct += 20;
 				incorrect = 0;
 				jsonLoad++;
 				disableAddclass();
+			}else{
+				$('.imgChecker').attr('src','assets/images/qImages/incorrect.png');
+				$('.imgChecker').show();
+				heavyAnswer = false;
+				incorrect += 10;
+				incorrectAudio.play();
+				if( incorrect == 20){
+					setTimeout(function(){ correctAns.play(); },1000);
+					popupCorrect();
+					incorrect = 0;
+					jsonLoad++;
+					disableAddclass();
+				}
 			}
-		}else if( heavyAnswer == false){
-			incorrect += 10;
-			incorrectAudio.play();
-			if( incorrect == 20){
-				setTimeout(function(){ correctAns.play(); },100);
-				popupError();
-				incorrect = 0;
-				jsonLoad++;
-				disableAddclass();
-			}
-		}else if( lightAnswer == true){
-			alert('correct');
-			correctAudio.play();
-			correct += 20;
-			incorrect = 0;
-			jsonLoad++;
-			disableAddclass();
-		}else if( heavyAnswer == true){
-			alert('correct');
-			correctAudio.play();
-			correct += 20;
-			incorrect = 0;
-			jsonLoad++;
-			disableAddclass();
-		}else if($('.qField #qValue').val() == ''){
-			alert('Please enter a value');
-		}*/
+		}
 		$('.score').text(correct);
 
 		console.log("incorrect: " + incorrect);
 		console.log("correct: " + correct);
 		console.log(jsonLoad);
-
-
-
 	});
-
 	$('.nextQuestion').click(function(){
+		var resultImg = ['<img src="assets/images/qImages/outstanding.png">',
+		 				'<img src="assets/images/qImages/doBetter.png">'],
+		 	info = '<h1>Your Score : '+ correct +'/100</h1>';
+
+
 		populateJson();
-		if(jsonLoad == 5){
-			alert('end page');
+		if(jsonLoad == 6){
+			if(correct == 100){
+				outstanding.play();
+				$("#popupResult").on("shown.bs.modal", function () {
+	     			$(this).find('.modal-body').append(resultImg[0] + info);
+				}).modal('show');
+			}else{
+				doBetter.play();
+				$("#popupResult").on("shown.bs.modal", function () {
+	     			$(this).find('.modal-body').append(resultImg[1] + info);
+				}).modal('show');
+			}
 		}
 	});
-
-
 	
-	
-	
-	
-	
+	$('.start').click(function(){
+		setTimeout(function(){
+			if(window.location.href.indexOf('#section2') > -1){
+				$('#myModal').modal('show');
+				document.getElementById("learningObj").play();
+			}
+		},200);
+	});
 
 
 
@@ -256,15 +231,16 @@ $(document).ready(function(){
 			return weight2 - weight1;
 		}
 	}
-	function popupError(){
-		var result = ( weight1 < weight2) ? 'lighter' : 'heavier';
-		alert('The ' + selectedItem.name + ' is ' + getDistance + 'g ' + result + ' than the ' + selectedItem2.name);
+	function popupCorrect(){
+		var res = ( weight1 < weight2) ? 'lighter' : 'heavier';
+		var resMerge = 'The ' + selectedItem.name + ' is ' + getDistance + 'g ' + res + ' than the ' + selectedItem2.name + '.';
+		$("#popupCorrect").on("shown.bs.modal", function () {
+		     $(this).find('.modal-body').text(resMerge);
+		}).modal('show');
 	}
 	function disableAddclass(){
 		$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 		$('.nextQuestion').addClass('active');
 	}
-	
-	
 
 });
