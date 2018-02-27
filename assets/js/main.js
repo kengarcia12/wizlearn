@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip(); 
 	$('.start').click(function(){
 		$('section.one').hide();
 		$('section.two').fadeIn();
@@ -28,7 +29,7 @@ $(document).ready(function(){
 		selectedItem2,
 		toAppend,
 		toAppen2,
-		imgPreUrl = "assets/images/qImages/",
+		imgPreUrl = 'assets/images/qImages/',
 		inputVal,
 		getDistance,
 		jsonLoad = 1,
@@ -40,7 +41,9 @@ $(document).ready(function(){
 		incorrect = 0,
 		correctAudio = new Audio('assets/audio/correct.mp3'),
 		incorrectAudio = new Audio('assets/audio/incorrect.mp3'),
-		correctAns = new Audio('assets/audio/correctAnswer.mp3');
+		correctAns = new Audio('assets/audio/correctAnswer.mp3'),
+		outstanding = new Audio('assets/audio/outsEffort.mp3'),
+		doBetter = new Audio ('assets/audio/doBetter.mp3');
 		
 
 
@@ -69,10 +72,17 @@ $(document).ready(function(){
 		toAppend2 = '<div class="itemName"> ' + selectedItem2.name + '<div class="itemLabel">'+selectedItem2.label+'<div class="itemWeight">'+selectedItem2.weight+'</div></div></div>';
 		weight1 = Math.abs(selectedItem.weight);
 		weight2 = Math.abs(selectedItem2.weight);
-		getDistance = getItemDistance(selectedItem.weight, selectedItem2.weight);
+		getDistance = Math.abs(getItemDistance(selectedItem.weight, selectedItem2.weight));
 		console.log(selectedItem.label + " : " + selectedItem.weight);
 		console.log(selectedItem2.label + " : " + selectedItem2.weight);
 		console.log(jsonLoad);
+		if(selectedItem.label == "present"){
+			$('.scaleArm').hide();
+		}else if(selectedItem.label == "apple"){
+			$('.scaleArm').hide();
+		}else if(selectedItem.label == "book"){
+			$('.scaleArm').hide();
+		}
 
 
 		$('.qImage').attr('src',imgPreUrl+selectedItem.label+'.png');
@@ -81,11 +91,12 @@ $(document).ready(function(){
 		$('.selectedItem2').append(toAppend2);
 		$('.i_label1').text(selectedItem.label);
 		$('.i_label2').text(selectedItem2.label+ '.');
-		$('.qIndicator').text('Q'+jsonLoad+'/5' );
+		$('.qIndicator').text('Q'+jsonLoad +'/5' );
 		$('.nextQuestion').removeClass('active');
 		$('#qValue').prop('disabled', false);
 		$('#qValue').val('');
 		$('.submit, .lighter, .heavier').prop('disabled',true);
+		$('.imgChecker').hide();
 	}
 	
 	populateJson();
@@ -140,22 +151,23 @@ $(document).ready(function(){
 		if($('.lighter').hasClass('selected')){
 			console.log($('.lighter').val());
 			if( inputVal == getDistance && weight1 < weight2){
-				console.log( 'correct' );
+				$('.imgChecker').attr('src','assets/images/qImages/correct.png');
+				$('.imgChecker').show();
 				lightAnswer = true;
-				alert('correct');
 				correctAudio.play();
 				correct += 20;
 				incorrect = 0;
 				jsonLoad++;
 				disableAddclass();
 			}else{
-				console.log('error');
+				$('.imgChecker').attr('src','assets/images/qImages/incorrect.png');
+				$('.imgChecker').show();
 				lightAnswer = 'false';
 				incorrect += 10;
 				incorrectAudio.play();
 				if( incorrect == 20){
-					setTimeout(function(){ correctAns.play(); },100);
-					popupError();
+					setTimeout(function(){ correctAns.play(); },1000);
+					popupCorrect();
 					incorrect = 0;
 					jsonLoad++;
 					disableAddclass();
@@ -164,22 +176,23 @@ $(document).ready(function(){
 		}else if($('.heavier').hasClass('selected')){
 			console.log($('.heavier').val());
 			if( inputVal == getDistance  && weight1 > weight2){
-				console.log( 'correct' );
+				$('.imgChecker').attr('src','assets/images/qImages/correct.png');
+				$('.imgChecker').show();
 				heavyAnswer = true;
-				alert('correct');
 				correctAudio.play();
 				correct += 20;
 				incorrect = 0;
 				jsonLoad++;
 				disableAddclass();
 			}else{
-				console.log('wrong');
+				$('.imgChecker').attr('src','assets/images/qImages/incorrect.png');
+				$('.imgChecker').show();
 				heavyAnswer = false;
 				incorrect += 10;
 				incorrectAudio.play();
 				if( incorrect == 20){
-					setTimeout(function(){ correctAns.play(); },100);
-					popupError();
+					setTimeout(function(){ correctAns.play(); },1000);
+					popupCorrect();
 					incorrect = 0;
 					jsonLoad++;
 					disableAddclass();
@@ -197,9 +210,24 @@ $(document).ready(function(){
 	});
 
 	$('.nextQuestion').click(function(){
+		var resultImg = ['<img src="assets/images/qImages/outstanding.png">',
+		 				'<img src="assets/images/qImages/doBetter.png">'],
+		 	info = '<h1>Your Score : '+ correct +'/100</h1>';
+
+
 		populateJson();
-		if(jsonLoad == 5){
-			alert('end page');
+		if(jsonLoad == 3){
+			if(correct == 20){
+				outstanding.play();
+				$("#popupResult").on("shown.bs.modal", function () {
+	     			$(this).find('.modal-body').append(resultImg[0] + info);
+				}).modal('show');
+			}else{
+				doBetter.play();
+				$("#popupResult").on("shown.bs.modal", function () {
+	     			$(this).find('.modal-body').append(resultImg[1] + info);
+				}).modal('show');
+			}
 		}
 	});
 
@@ -223,20 +251,18 @@ $(document).ready(function(){
 			return weight2 - weight1;
 		}
 	}
-	function popupError(){
-		var result = ( weight1 < weight2) ? 'lighter' : 'heavier';
-		alert('The ' + selectedItem.name + ' is ' + getDistance + 'g ' + result + ' than the ' + selectedItem2.name);
+	function popupCorrect(){
+		var res = ( weight1 < weight2) ? 'lighter' : 'heavier';
+		var resMerge = 'The ' + selectedItem.name + ' is ' + getDistance + 'g ' + res + ' than the ' + selectedItem2.name + '.';
+		$("#popupCorrect").on("shown.bs.modal", function () {
+		     $(this).find('.modal-body').text(resMerge);
+		}).modal('show');
 	}
 	function disableAddclass(){
 		$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 		$('.nextQuestion').addClass('active');
 	}
 
-
-setTimeout(function(){
-	$('#dynamicModal').modal('show');
-},3000)
-	
 	
 
 });

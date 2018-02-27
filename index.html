@@ -15,7 +15,7 @@
 
     </head>
     <body>
-        <audio id='intro' controls autoplay loop src="assets/audio/intro2.mp3" type="audio/ogg">
+        <audio id='intro' controls src="assets/audio/intro2.mp3" type="audio/ogg">
 
         </audio>
     	<header>
@@ -44,37 +44,39 @@
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
-                            <!-- <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div> -->
                             <div class="modal-body">
                                 <img src="assets/images/modal.png" class="img-responsive">
                                 <audio id="learningObj" src="assets/audio/learnObj.mp3" type="audio/ogg">
                                 </audio>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <div id="dynamicModal" class="modal fade" role="dialog">
+                <div id="popupCorrect" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
-                            <!-- <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Modal Header</h4>
-                            </div> -->
                             <div class="modal-body">
-                                <img src="assets/images/modal.png" class="img-responsive">
-                                <audio id="learningObj" src="assets/audio/learnObj.mp3" type="audio/ogg">
-                                </audio>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="popupResult" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success">Pay Again</button>
                             </div>
                         </div>
 
@@ -83,26 +85,18 @@
 
                 <div class="qContainer">
                     <div class="qWrap">
-                        <div class="col-lg-6">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="left">
                                 <div class="selectedItem"><img src="" class="img-responsive qImage"></div>
+                                <img src="assets/images/scale2.png" class="img-responsive scaleImg">
+                                <div class="cDot"><img src="assets/images/qImages/scaleArm.png" class="img-responsive scaleArm"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="right">
                                 <div class="selectedItem2"><img src="" class="img-responsive qImage2"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="left">
-                                <img src="assets/images/scale2.png" class="img-responsive">
-                                <span class="cDot"></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="right">
-                                <img src="assets/images/scale2.png" class="img-responsive">
-                                <span class="cDot"></span>
+                                <img src="assets/images/scale2.png" class="img-responsive scaleImg">
+                                <span class="cDot"><img src="assets/images/qImages/scaleArm.png" class="img-responsive scaleArm"></span>
                             </div>
                         </div>
                     </div>
@@ -112,19 +106,23 @@
                         <span class="i_label1"></span>
                         <span> is </span>
                         <input type="text" name="" id="qValue">
-                        <input type="submit" class="btn btn-default lighter" value="Lighter" disabled>
-                        <input type="submit" class="btn btn-default heavier" value="Heavier" disabled>
+                        <input type="submit" class="btn btn-primary btn-md lighter" value="Lighter" disabled>
+                        <input type="submit" class="btn btn-primary btn-md heavier" value="Heavier" disabled>
                         <span>than the </span>
                         <span class="i_label2"></span>
-                        <input type="submit" class="btn btn-primary submit" value="Submit" disabled>
+                        <input type="submit" class="btn btn-success btn-md submit" value="Submit" disabled>
+                        <img src="assets/images/qImages/correct.png" class="img-responsive imgChecker">
+
+
+
                     </div>
+                </div>
+                <div class="scoreWrap">
+                    <div class="scoreLabel">Score</div>
+                    <div class="score"></div>
                 </div>
 
 			</section>
-            <section class="three">
-                <div class="scoreLabel">Score</div>
-                <div class="score"></div>
-            </section>
     	</main>
 
 	    <div class="footer-overlay-left"></div>
@@ -132,14 +130,15 @@
     	<footer>
             <div class="wrap">
                 <div class="top pull-right">
-                    <ul>
-                        <li class="home"><i class="fas fa-home"></i></li>
+                   <ul>
+                        <li class="home" data-toggle="tooltip" data-placement="top" title="Home"><i class="fas fa-home"></i></li>
                         <li class="learn"><i class="fas fa-info" data-toggle="modal" data-target="#myModal"></i></li>
                         <li class="music"><i class="fas fa-volume-up"></i></li>
                         <li><i class="fas fa-hand-point-left"></i></i></li>
                         <li class="qIndicator"><span></span></li>
                         <li class="nextQuestion"><i class="fas fa-hand-point-right"></i></li>
                     </ul>
+                    
                 </div>
                 
                 <div class="bottom col-lg-12">

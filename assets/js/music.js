@@ -14,10 +14,12 @@ $(document).ready(function(){
 	});
 	$('.learn').click(function(){
 		document.getElementById("learningObj").play();
+		document.getElementById("learningObj").catch(function(error){
+			console.log(error);
+		});
 	});
 	$('.modal-footer button, #myModal').click(function(){
 		document.getElementById("learningObj").pause();
 	});
-	
 
 });
