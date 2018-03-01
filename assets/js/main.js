@@ -57,6 +57,12 @@ $(document).ready(function(){
 		$('section.two').fadeIn();
 		$('.home, .learn').css('pointer-events','auto');
 		$('.qIndicator span').css('visibility','visible');
+		setTimeout(function(){
+			if(window.location.href.indexOf('#section2') > -1){
+				$('#myModal').modal('show');
+				document.getElementById("learningObj").play();
+			}
+		},200);
 	});
 
 	//Button Lighter
@@ -172,21 +178,16 @@ $(document).ready(function(){
 				$('.qIndicator span').text('Q5/5' );
 			}
 		}
+		//Clear all classes and only add class if matched with the current item
 		$('.qDiv .left').find('.cDot img').removeAttr('class');
 		$('.qDiv .left').find('.cDot img').addClass('img-responsive' + ' ' + selectedItem.label);
 		$('.qDiv .right').find('.cDot img').removeAttr('class');
 		$('.qDiv .right').find('.cDot img').addClass('img-responsive' + ' ' + selectedItem2.label);
 
+		$('.lighter, .heavier').removeClass('selected');
+
 	});
 
-	$('.start').click(function(){
-		setTimeout(function(){
-			if(window.location.href.indexOf('#section2') > -1){
-				$('#myModal').modal('show');
-				document.getElementById("learningObj").play();
-			}
-		},200);
-	});
 	$('.home').click(function(){
 		$("#home").on("shown.bs.modal", function () {
  			$(this).find('.modal-body h1').text('End Activity?');
@@ -213,7 +214,7 @@ $(document).ready(function(){
 		}
 		
 		
-
+		
 		$('.qImage').attr('src',imgPreUrl+selectedItem.label+'.png');
 		$('.qImage2').attr('src',imgPreUrl+selectedItem2.label+'.png');
 		$('.selectedItem').append(toAppend);
@@ -228,6 +229,7 @@ $(document).ready(function(){
 		$('.imgChecker').hide();
 		$('.nextQuestion img').attr('src','assets/images/footerIcons/arrowR.png');
 
+		//Add class on first load with the exact / matched item
 		$('.qDiv').each(function(){
 			var _thisLabel = $(this).find('.itemLabel').text();
 			if(_thisLabel){
