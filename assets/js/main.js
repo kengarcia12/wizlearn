@@ -56,6 +56,7 @@ $(document).ready(function(){
 		$('section.one').hide();
 		$('section.two').fadeIn();
 		$('.home, .learn').css('pointer-events','auto');
+		$('.qIndicator span').css('visibility','visible');
 	});
 
 	//Button Lighter
@@ -80,6 +81,7 @@ $(document).ready(function(){
 			alert('Please enter a value');
 		}
 	});
+
 
 	//Submit button
 	$('.submit').click(function(){
@@ -141,6 +143,7 @@ $(document).ready(function(){
 			}
 		}
 		$('.score').text(correct);
+
 		console.log("incorrect: " + incorrect);
 		console.log("correct: " + correct);
 		console.log(jsonLoad);
@@ -160,13 +163,20 @@ $(document).ready(function(){
 				$("#popupResult").on("shown.bs.modal", function () {
 	     			$(this).find('.modal-body').append(resultImg[0] + info);
 				}).modal('show');
+				$('.qIndicator span').text('Q5/5' );
 			}else{
 				doBetter.play();
 				$("#popupResult").on("shown.bs.modal", function () {
 	     			$(this).find('.modal-body').append(resultImg[1] + info);
 				}).modal('show');
+				$('.qIndicator span').text('Q5/5' );
 			}
 		}
+		$('.qDiv .left').find('.cDot img').removeAttr('class');
+		$('.qDiv .left').find('.cDot img').addClass('img-responsive' + ' ' + selectedItem.label);
+		$('.qDiv .right').find('.cDot img').removeAttr('class');
+		$('.qDiv .right').find('.cDot img').addClass('img-responsive' + ' ' + selectedItem2.label);
+
 	});
 
 	$('.start').click(function(){
@@ -210,17 +220,18 @@ $(document).ready(function(){
 		$('.selectedItem2').append(toAppend2);
 		$('.i_label1').text(selectedItem.label);
 		$('.i_label2').text(selectedItem2.label+ '.');
-		$('.qIndicator').text('Q'+jsonLoad +'/5' );
+		$('.qIndicator span').text('Q'+jsonLoad +'/5' );
 		$('.nextQuestion').removeClass('active');
 		$('#qValue').prop('disabled', false);
 		$('#qValue').val('');
 		$('.submit, .lighter, .heavier').prop('disabled',true);
 		$('.imgChecker').hide();
+		$('.nextQuestion img').attr('src','assets/images/footerIcons/arrowR.png');
 
 		$('.qDiv').each(function(){
 			var _thisLabel = $(this).find('.itemLabel').text();
 			if(_thisLabel){
-				$(this).find('.scaleArm').addClass(_thisLabel);
+				$(this).find('.cDot img').addClass(_thisLabel);
 			}
 		});
 	}
@@ -246,6 +257,7 @@ $(document).ready(function(){
 	function disableAddclass(){
 		$('.qField #qValue, .submit, .lighter, .heavier').prop('disabled', true);
 		$('.nextQuestion').addClass('active');
+		$('.nextQuestion.active img').attr('src', 'assets/images/footerIcons/arrowR_act.png');
 	}
 
 });

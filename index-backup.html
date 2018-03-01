@@ -14,7 +14,7 @@
 
     </head>
     <body>
-        <audio id='intro' controls autoplay loop src="assets/audio/intro2.mp3" type="audio/ogg">
+        <audio id='intro' controls src="assets/audio/intro2.mp3" type="audio/ogg">
         </audio>
     	<header>
     		<div class="top">
@@ -36,7 +36,7 @@
                     <button class="btn btn-success btn-lg start slideInUp"></button>
                   </a>
                 </div>
-                <audio autoplay src="assets/audio/takingAwayGrams.mp3"></audio>
+                <!-- <audio autoplay src="assets/audio/takingAwayGrams.mp3"></audio> -->
 			</section>
 			<section id="#section2" class="two">
                 <!-- Score -->
@@ -120,29 +120,30 @@
                             <div class="left">
                                 <div class="selectedItem"><img src="" class="img-responsive qImage"></div>
                                 <img src="assets/images/scale2.png" class="img-responsive scaleImg">
-                                <div class="cDot"><img src="assets/images/qImages/scaleArm.png" class="img-responsive"></div>
+                                <div class="cDot"><img src="assets/images/qImages/scaleArm.png" class="img-responsive scaleArm"></div>
                             </div>
                         </div>
                         <div class="qDiv col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <div class="right">
                                 <div class="selectedItem2"><img src="" class="img-responsive qImage2"></div>
                                 <img src="assets/images/scale2.png" class="img-responsive scaleImg">
-                                <span class="cDot"><img src="assets/images/qImages/scaleArm.png" class="img-responsive"></span>
+                                <span class="cDot"><img src="assets/images/qImages/scaleArm.png" class="img-responsive scaleArm"></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="qField">
-                    <span> The </span>
-                    <span class="i_label1"></span>
-                    <span> is </span>
-                    <input type="text" name="" id="qValue">
-                    <input type="submit" class="btn btn-primary btn-md lighter" value="Lighter" disabled>
-                    <input type="submit" class="btn btn-primary btn-md heavier" value="Heavier" disabled>
-                    <span>than the </span>
-                    <span class="i_label2"></span>
-                    <input type="submit" class="btn btn-success btn-md submit" value="Submit" disabled>
-                    <img src="assets/images/qImages/correct.png" class="img-responsive imgChecker">
+
+                    <div class="qField">
+                        <span> The </span>
+                        <span class="i_label1"></span>
+                        <span> is </span>
+                        <input type="text" name="" id="qValue">
+                        <input type="submit" class="btn btn-primary btn-md lighter" value="Lighter" disabled>
+                        <input type="submit" class="btn btn-primary btn-md heavier" value="Heavier" disabled>
+                        <span>than the </span>
+                        <span class="i_label2"></span>
+                        <input type="submit" class="btn btn-success btn-md submit" value="Submit" disabled>
+                        <img src="assets/images/qImages/correct.png" class="img-responsive imgChecker">
+                    </div>
                 </div>
                 <!-- Question section -->
 
@@ -153,20 +154,28 @@
 
 	    
     	<footer>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
-                <ul>
-                    <!-- <li class="home"><i class="fas fa-home"></i></li> -->
-                    <!-- <li class="learn"><i class="fas fa-info" data-toggle="modal" data-target="#myModal"></i></li> -->
-                    <li class="home"><img src="assets/images/footerIcons/home.png"></i></li>
-                    <li class="learn"><img src="assets/images/footerIcons/info.png" data-toggle="modal" data-target="#myModal"></li>
-                    <li class="music"><img src="assets/images/footerIcons/music.png"></li>
-                    <li><img src="assets/images/footerIcons/arrowL.png"></li>
-                    <li class="qIndicator"><span></span></li>
-                    <li class="nextQuestion"><img src="assets/images/footerIcons/arrowR.png"></li>
-                </ul>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <p>Copyright <i class="far fa-copyright"></i> Wizlearn Technologies Pte Ltd. All Rights Reserved.</p>
+            <div class="wrap">
+                <div class="top pull-right">
+                   <ul>
+                        <li class="home"><i class="fas fa-home"></i></li>
+                        <li class="learn"><i class="fas fa-info" data-toggle="modal" data-target="#myModal"></i></li>
+                        <li class="music"><i class="fas fa-volume-up"></i></li>
+                        <li><i class="fas fa-hand-point-left"></i></i></li>
+                        <li class="qIndicator"><span></span></li>
+                        <li class="nextQuestion"><i class="fas fa-hand-point-right"></i></li>
+                    </ul>
+                    
+                </div>
+                
+                <div class="bottom">
+                    <div class="col-lg-12">
+                        <p>Copyright <i class="far fa-copyright"></i> Wizlearn Technologies Pte Ltd. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-lg-12">
+                        test
+                    </div>
+                    
+                </div>    
             </div>
         </footer>
 
